@@ -150,7 +150,7 @@ jobs:
         with:
           swap-size-mb: 1024
           temp-reserve-mb: 4608
-          root-reserve-mb: 3584
+          root-reserve-mb: 8192
           remove-dotnet: "true"
           remove-android: "true"
           remove-haskell: "true"
@@ -262,6 +262,10 @@ jobs:
           fi
           make download -j50
           make -j$(($(nproc) + 1)) package/network/utils/nftables/refresh V=s
+
+      - name: Print Disk Space Before Compile
+        if: inputs.build_firmware
+        run: df -h
 
       # build_firmware
       - name: Compile Openwrt
